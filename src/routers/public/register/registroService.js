@@ -2,8 +2,8 @@ import axios from 'axios';
 
 class RegisterService{
     async userRegister ({email, password, birth, name}){
-        return axios.post('https://0041e684acf4.ngrok.io/api/v1/user/register/', {
-            email, password, birthDate:birth, fullName:name
+        return axios.put(`${process.env.REACT_APP_API_URL}user/register/`, {
+            params:{email, password, birthDate:birth, fullName:name}
         })
     }
 }
