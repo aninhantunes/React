@@ -31,19 +31,24 @@ const Register = ({nome}) => {
                     <h1 className = {classes.title}>Cadastro</h1>
                         <TextField id="name" key = 'name' label="Nome Completo" helperText="Campo obrigatório." error = {!name} 
                         required onChange={(event)=>{setName(event.target.value)}} value = {name}/>
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                         <KeyboardDatePicker
-                            margin="normal"
-                            id="Birth"
-                            label="Data de Nascimento"
-                            format="MM/dd/yyyy"
-                            value={birth}
-                            onChange={(data)=>{setBirth(data);console.log(data);
-                            }}
-                            KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                            }}/>
-                        </MuiPickersUtilsProvider>
+                        <Grid>
+                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                margin="normal"
+                                id="Birth"
+                                label="Data de Nascimento"
+                                format="MM/dd/yyyy"
+                                value={birth}
+                                variant = "inline"
+                                inputVariant = "outlined"
+                                onChange={(data)=>{setBirth(data);console.log(data);
+                                }}
+                                KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                                }}/>
+                            </MuiPickersUtilsProvider>
+                        </Grid>
+                        
                         <TextField id="email" key = 'email' label="Email" required 
                         onChange={(event)=>{setEmail(event.target.value)}} value = {email}/>
                         <TextField id="password" key = 'password' label="Senha" type="password" 
