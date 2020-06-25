@@ -97,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 'auto',
-    padding: '100px',
+    padding: '30px 100px',
     backgroundColor: '#bfd7ea',
   },
 
