@@ -1,53 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import RegisterService from '../registroService';
+import LoginService from '../loginService';
 import TextField from '../../../../shared/components/textfield';
-import DatePicker from '../../../../shared/components/datePicker';
 import {validationEmail} from '../../../../shared/utils/validation';
 
 const Register = () => {
   const classes = useStyles();
-  const [name, setName] = useState('');
-  const [birth, setBirth] = useState(new Date('2014-08-18T21:11:54'));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
-  const [validName, setValidName] = useState(false);
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
-  const [validPasswordRepeat, setValidPasswordRepeat] = useState(false);
 
   useEffect(() => {
-    setValidName(!!name);
     setValidEmail(!!email && validationEmail(email));
     setValidPassword(!!password);
-    setValidPasswordRepeat((!!passwordRepeat)&&(passwordRepeat === password));
-  }, [name, email, password, passwordRepeat]);
+  }, [email, password]);
 
   const onClick = async () => {
-    await RegisterService.userRegister({ name, email, birth, password });
+    await LoginService.userLogin({email, password});
   };
 
   return (
     <Grid className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2} direction='column' className={classes.gridContainer}>
-          <h1 className={classes.title}>Cadastro</h1>
-          <TextField
-            id='name'
-            key='name'
-            label='Nome Completo'
-            error={!validName}
-            required
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
-            value={name}
-          />
-          <Grid item className={classes.dateInput}>
-            <DatePicker id='Birth' label='Data de Nascimento' value={birth} onChange={setBirth} />
-          </Grid>
+          <h1 className={classes.title}>Login</h1>
           <TextField
             id='email'
             key='email'
@@ -72,20 +50,7 @@ const Register = () => {
             }}
             value={password}
           />
-          <TextField
-            id='passwordRepeat'
-            key='passwordRepeat'
-            error = {!validPasswordRepeat}
-            helperText={!validPasswordRepeat && password && 'Senhas diferentes'}
-            label='Confirmação de Senha'
-            type='password'
-            required
-            onChange={(event) => {
-              setPasswordRepeat(event.target.value);
-            }}
-            value={passwordRepeat}
-          />
-          <Button variant='outlined' disabled={!validName || !validEmail || !validPassword || !validPasswordRepeat} onClick={onClick}>
+          <Button variant='outlined' disabled={!validEmail || !validPassword} onClick={onClick}>
             Entrar
           </Button>
         </Grid>
@@ -119,9 +84,6 @@ const useStyles = makeStyles((theme) => ({
 
   title: {
     color: '#0b3954',
-  },
-  dateInput: {
-    height: '90px',
   },
 }));
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Register from './routers/public/register/views';
+import Login from './routers/public/login/views';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Redirect, Switch } from 'react-router-dom';
@@ -15,7 +16,7 @@ function SelectRouter(authentication) {
   return (
     <Switch>
       <Route exect path='/registro' component={Register} />
-      <Route exect path='/login' component={() => <div>Login</div>} />
+      <Route exect path='/login' component={Login} />
       <Redirect to='/login' />
     </Switch>
   );

@@ -8,6 +8,7 @@ const TextFieldComponent = ({
   variant = 'outlined',
   helperText,
   error,
+  type,
   required,
   onChange,
   value,
@@ -25,6 +26,7 @@ const TextFieldComponent = ({
         required={required}
         onChange={onChange}
         value={value}
+        type = {type}
         onBlur={() => {
           Setfocus(true);
         }}
