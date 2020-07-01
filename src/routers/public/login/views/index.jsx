@@ -4,10 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import LoginService from '../loginService';
 import TextField from '../../../../shared/components/textfield';
 import {validationEmail} from '../../../../shared/utils/validation';
+import {connect} from 'react-redux';
 
-const Register = () => {
+const Login = (props) => {
   const classes = useStyles();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(props.email);
   const [password, setPassword] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
@@ -65,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
+    backgroundSize: 'cover',
   },
 
   gridContainer: {
@@ -73,18 +75,29 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: 'auto',
     padding: '30px 100px',
-    backgroundColor: '#bfd7ea',
+    height: '470px',
+    backgroundColor: '#2ec4b6',
+    borderRadius: '10px',
+    opacity: '0.7',
+  
   },
 
   paper: {
     maxWidth: '500px',
     justifyContent: 'center',
     margin: 'auto',
+    borderRadius: '10px',
   },
 
   title: {
-    color: '#0b3954',
+    color: '#ffffff',
   },
 }));
 
-export default Register;
+const mapStateToProps = (state) => {
+  return{
+    email: state.register.email
+  }
+}
+
+export default connect(mapStateToProps, null)(Login);

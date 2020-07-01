@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import RegisterService from '../registroService';
+import {registerOperation} from '../redux';
 import TextField from '../../../../shared/components/textfield';
 import DatePicker from '../../../../shared/components/datePicker';
 import {validationEmail} from '../../../../shared/utils/validation';
+import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-const Register = () => {
+const Register = ({userRegister}) => {
   const classes = useStyles();
   const [name, setName] = useState('');
   const [birth, setBirth] = useState(new Date('2014-08-18T21:11:54'));
@@ -17,6 +19,7 @@ const Register = () => {
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
   const [validPasswordRepeat, setValidPasswordRepeat] = useState(false);
+  const [toRedirect, setToRedirect] = useState(false);
 
   useEffect(() => {
     setValidName(!!name);
@@ -26,8 +29,15 @@ const Register = () => {
   }, [name, email, password, passwordRepeat]);
 
   const onClick = async () => {
-    await RegisterService.userRegister({ name, email, birth, password });
+    await userRegister({ name, email, birth, password });
+    setToRedirect(true);
   };
+
+  if(toRedirect){
+    return(
+      <Redirect to='/login' />
+    )
+  }
 
   return (
     <Grid className={classes.root}>
@@ -125,4 +135,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default Register;
+const mapDispatchToProps = {
+  userRegister: (data) => registerOperation.userRegister(data)
+}
+
+export default connect(null, mapDispatchToProps)(Register);
