@@ -5,6 +5,7 @@ import LoginService from '../loginService';
 import TextField from '../../../../shared/components/textfield';
 import {validationEmail} from '../../../../shared/utils/validation';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 
 const Login = (props) => {
   const classes = useStyles();
@@ -12,6 +13,7 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
+  const [toRedirect, setToRedirect] = useState(false);
 
   useEffect(() => {
     setValidEmail(!!email && validationEmail(email));
@@ -20,7 +22,14 @@ const Login = (props) => {
 
   const onClick = async () => {
     await LoginService.userLogin({email, password});
+    setToRedirect(true);
   };
+
+  if(toRedirect){
+    return(
+      <Redirect to='/home' />
+    );
+  }
 
   return (
     <Grid className={classes.root}>
