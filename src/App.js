@@ -5,7 +5,7 @@ import Layout from './routers/private/layout/views';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 function SelectRouter(authentication) {
   if (authentication) {
@@ -14,7 +14,7 @@ function SelectRouter(authentication) {
         <Switch>
           <Route exect path='/home' component={() => <div>Home</div>} />
         </Switch>
-       </Layout>
+      </Layout>
     );
   }
   return (
@@ -26,23 +26,22 @@ function SelectRouter(authentication) {
   );
 }
 
-function App({authentication}) {
+function App({ authentication }) {
   const classes = useStyles();
-  const routers = SelectRouter({authentication});
+  const routers = SelectRouter(authentication);
   return <Grid className={classes.App}>{routers}</Grid>;
 }
 
-const useStyles = makeStyles((tema) => ({
+const useStyles = makeStyles((theme) => ({
   App: {
     height: '100vh',
   },
 }));
 
 const mapStateToProps = (state) => {
-  return{
-    authentication: state.login.authentication
-  }
-}
+  return {
+    authentication: state.login.authentication,
+  };
+};
 
 export default connect(mapStateToProps, null)(App);
-
