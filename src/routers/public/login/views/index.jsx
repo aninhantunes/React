@@ -51,7 +51,7 @@ const Login = (props) => {
             }}
             value={password}
           />
-          <Button variant='outlined' disabled={!validEmail || !validPassword} onClick={onClick}>
+          <Button variant='contained' color='primary' disabled={!validEmail || !validPassword} onClick={onClick}>
             Entrar
           </Button>
         </Grid>
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundSize: 'cover',
+    backgroundColor: '#003554',
   },
 
   gridContainer: {
@@ -76,9 +77,9 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     padding: '30px 100px',
     height: '470px',
-    backgroundColor: '#2ec4b6',
+    backgroundColor: '#e0fbfc',
     borderRadius: '10px',
-    opacity: '0.7',
+    opacity: '0.8',
   
   },
 
@@ -87,10 +88,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: 'auto',
     borderRadius: '10px',
+    background: 'url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)',
   },
 
   title: {
-    color: '#ffffff',
+    color: '#003554',
+    textTransform: 'uppercase',
   },
 }));
 
