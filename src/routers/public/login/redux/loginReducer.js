@@ -2,6 +2,8 @@ import {SAVE_DATA_LOGIN} from './loginActions';
 
 const INITIAL_STATE = {
     email : '',
+    birthDate: '',
+    fullName: '',
     authentication: false,
 };
 
@@ -11,8 +13,11 @@ export default (state = INITIAL_STATE, action) => {
             const data = action.payload;
             return{
                 ...state,
-                ...data,
-                authentication: true,
+                email: data.email,
+                birthDate: data.birthDate,
+                fullName: data.Name,
+
+                authentication: !!data.email,
             };
         default:
             return state;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import LoginService from '../loginService';
+import {loginOperation} from '../redux';
 import TextField from '../../../../shared/components/textfield';
 import {validationEmail} from '../../../../shared/utils/validation';
 import {connect} from 'react-redux';
@@ -21,7 +21,7 @@ const Login = (props) => {
   }, [email, password]);
 
   const onClick = async () => {
-    await LoginService.userLogin({email, password});
+    await props.userLogin({email, password});
     setToRedirect(true);
   };
 
@@ -34,6 +34,7 @@ const Login = (props) => {
   return (
     <Grid className={classes.root}>
       <Paper className={classes.paper}>
+      <div className = {classes.background}/>
         <Grid container spacing={2} direction='column' className={classes.gridContainer}>
           <h1 className={classes.title}>Login</h1>
           <TextField
@@ -79,6 +80,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#003554',
   },
 
+  background:{
+    opacity: '0.8',
+    backgroundColor: '#e0fbfc',
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: '0',
+
+
+  },
+
   gridContainer: {
     width: '100%',
     alignItems: 'center',
@@ -86,9 +98,8 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     padding: '30px 100px',
     height: '470px',
-    backgroundColor: '#e0fbfc',
     borderRadius: '10px',
-    opacity: '0.8',
+    zIndex: '1',
   
   },
 
@@ -97,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: 'auto',
     borderRadius: '10px',
+    position: 'relative',
     background: 'url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)',
   },
 
@@ -112,4 +124,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(Login);
+const mapDispatchToProps = {
+  userLogin: (data) => loginOperation.userLogin(data)
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
