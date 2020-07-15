@@ -1,6 +1,7 @@
 import React from 'react';
 import Register from './routers/public/register/views';
 import Login from './routers/public/login/views';
+import { loginOperation } from './routers/public/login/redux';
 import { ThemeProvider } from '@material-ui/styles';
 import { CssBaseline } from '@material-ui/core';
 import Layout from './routers/private/layout/views';
@@ -31,8 +32,9 @@ function SelectRouter(authentication) {
   );
 }
 
-function App({ authentication }) {
+function App({ authentication, userPersistDataLogin }) {
   const classes = useStyles();
+  userPersistDataLogin();
   const routers = SelectRouter(authentication);
   return <Grid className={classes.App}><ThemeProvider theme = {projectTheme}><CssBaseline/>{routers}</ThemeProvider></Grid>;
 }
@@ -43,10 +45,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+const mapDispatchToProps = {
+  userPersistDataLogin: () => loginOperation.userPersistDataLogin(),
+};
+
+
 const mapStateToProps = (state) => {
   return {
     authentication: state.login.authentication,
   };
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

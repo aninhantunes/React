@@ -33,7 +33,7 @@ const Login = (props) => {
   return (
     <Grid className={classes.root}>
       <Paper className={classes.paper}>
-        <img className={classes.background} src={BackgroundLogin} alt='' />
+        <img className={classes.background} src={BackgroundLogin} alt='É uma imagem de Londres no background' />
         <Grid container spacing={2} direction='column' className={classes.gridContainer}>
           <h1 className={classes.title}>Login</h1>
           <TextField
