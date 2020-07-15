@@ -3,6 +3,7 @@ import { Grid, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {loginOperation} from '../redux';
 import TextField from '../../../../shared/components/textfield';
+import ColorBlending from 'gl-react-color-blending';
 import {validationEmail} from '../../../../shared/utils/validation';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -34,7 +35,7 @@ const Login = (props) => {
   return (
     <Grid className={classes.root}>
       <Paper className={classes.paper}>
-      <div className = {classes.background}/>
+      {/* <div className = {classes.background}/> */}
         <Grid container spacing={2} direction='column' className={classes.gridContainer}>
           <h1 className={classes.title}>Login</h1>
           <TextField
@@ -61,7 +62,7 @@ const Login = (props) => {
             }}
             value={password}
           />
-          <Button variant='contained' color='primary' disabled={!validEmail || !validPassword} onClick={onClick}>
+          <Button variant='contained' color='secondary' disabled={!validEmail || !validPassword} onClick={onClick}>
             Entrar
           </Button>
         </Grid>
@@ -77,16 +78,22 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundSize: 'cover',
-    backgroundColor: '#003554',
+    background: 'center',
+    opacity: '0.8',
+    backgroundImage: 'url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)',
+    imageColor: 'rgba(173, 52, 80, 0.5)',
+    colorBlending: 'luminosity',
+    backgroundBlendMode: 'luminosity',
   },
 
   background:{
     opacity: '0.8',
-    backgroundColor: '#e0fbfc',
+    backgroundColor: '#E5E5E5',
     width: '100%',
     height: '100%',
     position: 'absolute',
     zIndex: '0',
+    borderRadius: '10px',
 
 
   },
@@ -100,6 +107,7 @@ const useStyles = makeStyles((theme) => ({
     height: '470px',
     borderRadius: '10px',
     zIndex: '1',
+    backgroundColor: '#E5E5E5',
   
   },
 
@@ -109,11 +117,11 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     borderRadius: '10px',
     position: 'relative',
-    background: 'url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)',
+    backgroundColor: '#E5E5E5',
   },
 
   title: {
-    color: '#003554',
+    color: '#B23552',
     textTransform: 'uppercase',
   },
 }));

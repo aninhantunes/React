@@ -1,5 +1,7 @@
-export const PRIMARY_COLOR = '#6f116f';
-export const SECONDARY_COLOR = '#00bfff';
+import { TextField } from "@material-ui/core";
+
+export const PRIMARY_COLOR = '#004643';
+export const SECONDARY_COLOR = '#B23552';
 
 export const SPACING = 8;
 
