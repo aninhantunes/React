@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Paper, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {loginOperation} from '../redux';
+import { loginOperation } from '../redux';
 import TextField from '../../../../shared/components/textfield';
-import {validationEmail} from '../../../../shared/utils/validation';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+import { validationEmail } from '../../../../shared/utils/validation';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import BackgroundLogin from '../../../../shared/img/backgroundLogin.jpg';
 
 const Login = (props) => {
   const classes = useStyles();
@@ -21,28 +22,26 @@ const Login = (props) => {
   }, [email, password]);
 
   const onClick = async () => {
-    await props.userLogin({email, password});
+    await props.userLogin({ email, password });
     setToRedirect(true);
   };
 
-  if(toRedirect){
-    return(
-      <Redirect to='/home' />
-    );
+  if (toRedirect) {
+    return <Redirect to='/home' />;
   }
 
   return (
     <Grid className={classes.root}>
       <Paper className={classes.paper}>
-      <div className = {classes.background}/>
+        <img className={classes.background} src={BackgroundLogin} alt='' />
         <Grid container spacing={2} direction='column' className={classes.gridContainer}>
           <h1 className={classes.title}>Login</h1>
           <TextField
             id='email'
             key='email'
             label='Email'
-            error = {!validEmail}
-            helperText = {email && 'Email inválido'}
+            error={!validEmail}
+            helperText={email && 'Email inválido'}
             required
             onChange={(event) => {
               setEmail(event.target.value);
@@ -53,7 +52,7 @@ const Login = (props) => {
             id='password'
             key='password'
             label='Senha'
-            error = {!validPassword}
+            error={!validPassword}
             type='password'
             required
             onChange={(event) => {
@@ -61,7 +60,12 @@ const Login = (props) => {
             }}
             value={password}
           />
-          <Button variant='contained' color='primary' disabled={!validEmail || !validPassword} onClick={onClick}>
+          <Button
+            variant='contained'
+            color='primary'
+            disabled={!validEmail || !validPassword}
+            onClick={onClick}
+          >
             Entrar
           </Button>
         </Grid>
@@ -78,17 +82,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     backgroundSize: 'cover',
     backgroundColor: '#003554',
+    position: 'relative',
   },
 
-  background:{
-    opacity: '0.8',
-    backgroundColor: '#e0fbfc',
+  background: {
     width: '100%',
     height: '100%',
     position: 'absolute',
-    zIndex: '0',
-
-
+    borderRadius: '10px',
+    zIndex: 0,
   },
 
   gridContainer: {
@@ -99,8 +101,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '30px 100px',
     height: '470px',
     borderRadius: '10px',
-    zIndex: '1',
-  
   },
 
   paper: {
@@ -109,24 +109,23 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     borderRadius: '10px',
     position: 'relative',
-    background: 'url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)',
   },
 
   title: {
     color: '#003554',
     textTransform: 'uppercase',
+    zIndex: 1,
   },
 }));
 
 const mapStateToProps = (state) => {
-  return{
-    email: state.register.email
-  }
-}
+  return {
+    email: state.register.email,
+  };
+};
 
 const mapDispatchToProps = {
-  userLogin: (data) => loginOperation.userLogin(data)
-}
-
+  userLogin: (data) => loginOperation.userLogin(data),
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
