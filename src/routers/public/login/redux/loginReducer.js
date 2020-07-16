@@ -1,4 +1,4 @@
-import {SAVE_DATA_LOGIN} from './loginActions';
+import {SAVE_DATA_LOGIN, USER_LOG_OFF} from './loginActions';
 
 const INITIAL_STATE = {
     email : '',
@@ -19,6 +19,11 @@ export default (state = INITIAL_STATE, action) => {
 
                 authentication: !!data.email,
             };
+        case USER_LOG_OFF:
+            return{
+                ...INITIAL_STATE,
+            };
+
         default:
             return state;
     }

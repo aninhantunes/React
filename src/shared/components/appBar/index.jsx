@@ -1,4 +1,3 @@
-import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +13,11 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { loginOperation } from '../../../routers/public/login/redux';
+import { Redirect } from 'react-router-dom';
+import React, { useState} from 'react';
+import { connect } from 'react-redux';
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -79,7 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppBarComponent() {
+export function AppBarComponent({userLogOff}) {
+  const [toRedirect, setToRedirect] = useState(false);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -104,6 +109,13 @@ export default function AppBarComponent() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const logOff = async() => {
+    await userLogOff();
+    setToRedirect(true);
+  };
+
+ 
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -117,6 +129,7 @@ export default function AppBarComponent() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logOff}>Sair</MenuItem>
     </Menu>
   );
 
@@ -160,6 +173,13 @@ export default function AppBarComponent() {
       </MenuItem>
     </Menu>
   );
+
+
+  if(toRedirect){
+    return(
+      <Redirect to='/login' />
+    )
+  }
 
   return (
     <div className={classes.grow}>
@@ -230,3 +250,10 @@ export default function AppBarComponent() {
     </div>
   );
 }
+
+const mapDispatchToProps = {
+  userLogOff: () => loginOperation.userLogOff(),
+};
+
+export default connect(null, mapDispatchToProps)(AppBarComponent);
+

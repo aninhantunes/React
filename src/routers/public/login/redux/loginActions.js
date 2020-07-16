@@ -1,4 +1,5 @@
 export const SAVE_DATA_LOGIN = 'login/SAVE_DATA_LOGIN';
+export const USER_LOG_OFF = 'login/USER_LOG_OFF'
 
 const saveDataLogin = (dataLogin) => {
     return {
@@ -7,4 +8,12 @@ const saveDataLogin = (dataLogin) => {
     };
 };
 
-export {saveDataLogin};
+const userLogOff = () => {
+    return {
+        type: USER_LOG_OFF,
+    };
+};
+
+
+
+export {saveDataLogin, userLogOff};

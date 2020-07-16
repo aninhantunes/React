@@ -14,6 +14,13 @@ export const userLogin = (data) => async(dispatch) => {
     }
 }
 
+export const userLogOff = () => async(dispatch) => {
+    localStorage.clear();
+    dispatch(loginActions.userLogOff());
+ 
+
+}
+
 export const userPersistDataLogin = () => async(dispatch) => {
     const cacheUserData = localStorage.getItem('userData');
     if(!!cacheUserData){
