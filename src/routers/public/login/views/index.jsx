@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     backgroundSize: 'cover',
-    backgroundColor: '#003554',
+    backgroundColor: '#1d3557',
     position: 'relative',
   },
 

@@ -11,11 +11,12 @@ export default (state = INITIAL_STATE, action) => {
     switch(action.type){
         case SAVE_DATA_LOGIN:
             const data = action.payload;
+            console.log('trace 2', data);
             return{
                 ...state,
                 email: data.email,
                 birthDate: data.birthDate,
-                fullName: data.Name,
+                fullName: data.fullName,
 
                 authentication: !!data.email,
             };

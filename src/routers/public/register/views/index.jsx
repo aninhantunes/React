@@ -43,7 +43,7 @@ const Register = ({userRegister}) => {
     <Grid className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container spacing={2} direction='column' className={classes.gridContainer}>
-          <h1 className={classes.title}>Cadastro</h1>
+          <h1 className={classes.title}>Cadastre-se</h1>
           <TextField
             id='name'
             key='name'
@@ -95,8 +95,11 @@ const Register = ({userRegister}) => {
             }}
             value={passwordRepeat}
           />
-          <Button variant='outlined' disabled={!validName || !validEmail || !validPassword || !validPasswordRepeat} onClick={onClick}>
-            Entrar
+          <Button variant='contained' 
+          disabled={!validName || !validEmail || !validPassword || !validPasswordRepeat} 
+          color = 'secondary'
+          onClick={onClick}>
+          Cadastrar
           </Button>
         </Grid>
       </Paper>
@@ -110,6 +113,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
+    backgroundColor: '#1d3557',
   },
 
   gridContainer: {
@@ -119,16 +123,19 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     padding: '30px 100px',
     backgroundColor: '#bfd7ea',
+    borderRadius: '7px',
   },
 
   paper: {
     maxWidth: '500px',
     justifyContent: 'center',
     margin: 'auto',
+    borderRadius: '7px',
   },
 
   title: {
-    color: '#0b3954',
+    color: '#B23552',
+    textTransform: 'uppercase',
   },
   dateInput: {
     height: '90px',

@@ -17,6 +17,7 @@ import { loginOperation } from '../../../routers/public/login/redux';
 import { Redirect } from 'react-router-dom';
 import React, { useState} from 'react';
 import { connect } from 'react-redux';
+import ModalPersonalData from '../modalPersonalData';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -83,11 +84,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function AppBarComponent({userLogOff}) {
+export function AppBarComponent({userLogOff, dataLogin}) {
   const [toRedirect, setToRedirect] = useState(false);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  console.log('trace', dataLogin);
+  
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -114,6 +118,11 @@ export function AppBarComponent({userLogOff}) {
     setToRedirect(true);
   };
 
+  const handlePersonalData = () => {
+    setModalIsOpen(true);
+    handleMenuClose();
+  };
+
  
 
   const menuId = 'primary-search-account-menu';
@@ -127,8 +136,8 @@ export function AppBarComponent({userLogOff}) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handlePersonalData}>Meus dados</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Alterar senha</MenuItem>
       <MenuItem onClick={logOff}>Sair</MenuItem>
     </Menu>
   );
@@ -247,6 +256,7 @@ export function AppBarComponent({userLogOff}) {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      <ModalPersonalData modalIsOpen = {modalIsOpen} closeModal = {() => {setModalIsOpen(false)}} initialData = {dataLogin}/>
     </div>
   );
 }
@@ -255,5 +265,15 @@ const mapDispatchToProps = {
   userLogOff: () => loginOperation.userLogOff(),
 };
 
-export default connect(null, mapDispatchToProps)(AppBarComponent);
+const mapStateToProps = (state) => {
+  return {
+    dataLogin: {
+      name: state.login.fullName,
+      birth: state.login.birthDate,
+      email: state.login.email
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppBarComponent);
 
