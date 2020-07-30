@@ -1,5 +1,5 @@
 export const PRIMARY_COLOR = '#1D3557';
-export const SECONDARY_COLOR = '#B23552';
+export const SECONDARY_COLOR = '#a8dadc';
 
 export const SPACING = 8;
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Button } from '@material-ui/core';
+import { Grid, Paper, Button} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { loginOperation } from '../redux';
 import TextField from '../../../../shared/components/textfield';
@@ -15,6 +16,8 @@ const Login = (props) => {
   const [validEmail, setValidEmail] = useState(false);
   const [validPassword, setValidPassword] = useState(false);
   const [toRedirect, setToRedirect] = useState(false);
+
+  const history = useHistory(); 
 
   useEffect(() => {
     setValidEmail(!!email && validationEmail(email));
@@ -55,16 +58,18 @@ const Login = (props) => {
             error={!validPassword}
             type='password'
             required
+            linkOption = {{onClick : () => {history.push('/registro')}, text: 'Não tem cadastro?'}}
             onChange={(event) => {
               setPassword(event.target.value);
             }}
             value={password}
           />
-          <Button
+          <Button 
             variant='contained'
             color='primary'
             disabled={!validEmail || !validPassword}
             onClick={onClick}
+            className = {classes.button}
           >
             Entrar
           </Button>
@@ -116,6 +121,10 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
     zIndex: 1,
   },
+
+  button:{
+    marginTop: theme.spacing(2),
+  }
 }));
 
 const mapStateToProps = (state) => {

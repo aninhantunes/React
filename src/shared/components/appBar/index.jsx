@@ -9,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -18,6 +17,8 @@ import { Redirect } from 'react-router-dom';
 import React, { useState} from 'react';
 import { connect } from 'react-redux';
 import ModalPersonalData from '../modalPersonalData';
+import Avatar from '@material-ui/core/Avatar';
+import {deepPurple } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -82,6 +83,12 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+
+  purple: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],
+  },
+
 }));
 
 export function AppBarComponent({userLogOff, dataLogin}) {
@@ -90,7 +97,6 @@ export function AppBarComponent({userLogOff, dataLogin}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  console.log('trace', dataLogin);
   
 
   const isMenuOpen = Boolean(anchorEl);
@@ -123,6 +129,13 @@ export function AppBarComponent({userLogOff, dataLogin}) {
     handleMenuClose();
   };
 
+  let initialsName = '';
+
+  if(dataLogin.name){
+    const initialsNameArray = dataLogin.name.split(' ');
+    console.log("trace name", initialsNameArray);
+    initialsName = [initialsNameArray[0][0], initialsNameArray[1][0]].join('').toUpperCase();
+  }
  
 
   const menuId = 'primary-search-account-menu';
@@ -176,7 +189,11 @@ export function AppBarComponent({userLogOff, dataLogin}) {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+         {dataLogin.userPhoto ?  
+          (<Avatar alt="Remy Sharp" src={dataLogin.userPhoto}/>)
+          :
+         (<Avatar className={classes.purple}>{initialsName}</Avatar>)
+         }
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -238,7 +255,11 @@ export function AppBarComponent({userLogOff, dataLogin}) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {dataLogin.userPhoto ?  
+              (<Avatar alt="Remy Sharp" src={dataLogin.userPhoto} />)
+              :
+              (<Avatar className={classes.purple}>{initialsName}</Avatar>)
+              }
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -266,11 +287,13 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => {
+  console.log("trace userphoto", state.login);
   return {
     dataLogin: {
       name: state.login.fullName,
       birth: state.login.birthDate,
-      email: state.login.email
+      email: state.login.email,
+      userPhoto: state.login.userPhoto,
     },
   };
 };

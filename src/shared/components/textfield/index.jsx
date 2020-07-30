@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const TextFieldComponent = ({
   id,
@@ -12,6 +13,7 @@ const TextFieldComponent = ({
   required,
   onChange,
   value,
+  linkOption,
 }) => {
   const classes = useStyles();
   const [focus, Setfocus] = useState(false);
@@ -31,9 +33,15 @@ const TextFieldComponent = ({
           Setfocus(true);
         }}
       />
-      <Typography variant='caption' color='error'>
-        {errorBehavior && (helperText || 'Campo obrigatório.')}
-      </Typography>
+      {linkOption ? 
+        (<Typography variant='caption' align = 'right' className = {classes.link} onClick = {linkOption.onClick}>
+          {linkOption.text}
+        </Typography>)
+      :
+        (<Typography variant='caption' color='error'>
+          {errorBehavior && (helperText || 'Campo obrigatório.')}
+        </Typography>)
+      }
     </Grid>
   );
 };
@@ -44,7 +52,17 @@ const useStyles = makeStyles((tema) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    zIndex : 1,
   },
+
+  link: {
+    cursor: 'pointer',
+    '&:hover':{
+      textDecoration: 'underline',
+    }
+  },
+
+
 }));
 
 export default TextFieldComponent;

@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     email : '',
     birthDate: '',
     fullName: '',
+    userPhoto: '',
     authentication: false,
 };
 
@@ -11,14 +12,14 @@ export default (state = INITIAL_STATE, action) => {
     switch(action.type){
         case SAVE_DATA_LOGIN:
             const data = action.payload;
-            console.log('trace 2', data);
             return{
                 ...state,
                 email: data.email,
                 birthDate: data.birthDate,
                 fullName: data.fullName,
-
+                userPhoto: data.userPhoto,
                 authentication: !!data.email,
+                
             };
         case USER_LOG_OFF:
             return{

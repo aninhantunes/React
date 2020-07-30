@@ -22,6 +22,7 @@ const styles = (theme) => ({
     top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
+
 });
 
 const DialogTitle = withStyles(styles)((props) => {
@@ -74,8 +75,8 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
           Meus Dados
         </DialogTitle>
         <DialogContent dividers> 
-            <Grid content spacing = {2}>
-                <Grid item xs = {4}>
+            <Grid container spacing = {4}>
+                <Grid item xs = {6}>
                     <TextField
                         id='name'
                         key='name'
@@ -88,15 +89,15 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
                         value={name}
                     />
                 </Grid>
-                <Grid item xs = {4}>
+                <Grid item xs = {6}>
                     <Grid item className={classes.dateInput}>
                         <DatePicker id='Birth' label='Data de Nascimento' value={birth} onChange={setBirth} />
                     </Grid>
                 </Grid>
             </Grid>
 
-            <Grid content spacing = {2}>
-                <Grid item xs = {4}>
+            <Grid container spacing = {4}>
+                <Grid item xs = {6}>
                     <TextField
                         id='email'
                         key='email'
@@ -110,7 +111,7 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
                         value={email}
                     />
                 </Grid>
-                <Grid item xs = {4}>
+                <Grid item xs = {6}>
                     <TextField
                         id='password'
                         key='password'
@@ -127,7 +128,7 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
             </Grid>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={closeModal} color="primary">
+          <Button autoFocus onClick={closeModal} color="primary" variant = 'contained' className={classes.botao}>
             Salvar alterações
           </Button>
         </DialogActions>
@@ -140,6 +141,7 @@ const useStyles = makeStyles((theme) => ({
     dateInput: {
       height: '90px',
     },
+
   }));
 
 
