@@ -69,13 +69,13 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
 
   return (
     <div>
-      <Dialog onClose={closeModal} aria-labelledby="customized-dialog-title" open={modalIsOpen}>
+      <Dialog onClose={closeModal} aria-labelledby="customized-dialog-title" open={modalIsOpen} fullWidth>
         <DialogTitle id="customized-dialog-title" onClose={closeModal}>
           Meus Dados
         </DialogTitle>
-        <DialogContent dividers>
-            <Grid content>
-                <Grid item>
+        <DialogContent dividers> 
+            <Grid content spacing = {2}>
+                <Grid item xs = {4}>
                     <TextField
                         id='name'
                         key='name'
@@ -88,15 +88,15 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
                         value={name}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs = {4}>
                     <Grid item className={classes.dateInput}>
                         <DatePicker id='Birth' label='Data de Nascimento' value={birth} onChange={setBirth} />
                     </Grid>
                 </Grid>
             </Grid>
 
-            <Grid content>
-                <Grid item>
+            <Grid content spacing = {2}>
+                <Grid item xs = {4}>
                     <TextField
                         id='email'
                         key='email'
@@ -110,7 +110,7 @@ function ModalPersonalDataComponent({modalIsOpen, closeModal, initialData}) {
                         value={email}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs = {4}>
                     <TextField
                         id='password'
                         key='password'
