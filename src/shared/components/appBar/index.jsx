@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import ModalPersonalData from '../modalPersonalData';
 import Avatar from '@material-ui/core/Avatar';
 import {deepPurple } from '@material-ui/core/colors';
+import {USER_COLORs, USER_COLORS} from '../../../theme';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -84,16 +85,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  purple: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
-  },
+  purple:({userColor}) => ({
+    backgroundColor: userColor,
+  }),
 
 }));
 
 export function AppBarComponent({userLogOff, dataLogin}) {
   const [toRedirect, setToRedirect] = useState(false);
-  const classes = useStyles();
+  const userColorId = (dataLogin.id - 1)%USER_COLORS.length;
+  const classes = useStyles({userColor : USER_COLORS[userColorId]});
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -294,6 +295,7 @@ const mapStateToProps = (state) => {
       birth: state.login.birthDate,
       email: state.login.email,
       userPhoto: state.login.userPhoto,
+      id: state.login.id,
     },
   };
 };

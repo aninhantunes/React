@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     birthDate: '',
     fullName: '',
     userPhoto: '',
+    id: 0,
     authentication: false,
 };
 
@@ -18,6 +19,7 @@ export default (state = INITIAL_STATE, action) => {
                 birthDate: data.birthDate,
                 fullName: data.fullName,
                 userPhoto: data.userPhoto,
+                id: data.id,
                 authentication: !!data.email,
                 
             };

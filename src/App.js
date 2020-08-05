@@ -10,6 +10,7 @@ import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import theme from './theme';
+import Home from './routers/private/home/views';
 
 const projectTheme = createMuiTheme(theme);
 
@@ -18,7 +19,8 @@ function SelectRouter(authentication) {
     return (
       <Layout>
         <Switch>
-          <Route exect path='/home' component={() => <div>Home</div>} />
+          <Route exect path='/home' component={Home} />
+          <Redirect to='/home' />
         </Switch>
       </Layout>
     );

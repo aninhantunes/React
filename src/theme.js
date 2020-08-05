@@ -6,6 +6,8 @@ export const SPACING = 8;
 const round2 = (n) => Math.round(n * 100) / 100;
  
 const em = (n) => round2(n) + 'em';
+
+export const USER_COLORS = ['#ffe66d', '#43aa8b', '#ff006e', '#90be6d', '#b8f2e6', '#073b4c', '#9a031e', '#0353a4'];
  
 const generateNClasses = (name, number, calc) => {
   let classes = {};
