@@ -21,19 +21,28 @@ import StarHalfIcon from '@material-ui/icons/StarHalf';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: '400px',
+    minHeight: '550px',
   },
   media: {
-    height: 0,
+    height: '250px',
     paddingTop: '56.25%', // 16:9
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
+    display: 'flex',
+    alignSelf: 'left',
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
   },
+
+  starContent: {
+    display: 'flex',
+    alignSelf: 'center',
+  },
+
   expandOpen: {
     transform: 'rotate(180deg)',
   },
@@ -47,7 +56,6 @@ export default function CardComponent({name, description, price, previousPrice, 
   const [expanded, setExpanded] = React.useState(false);
   const mediaArray = ratings.map(item => item.value);
   let mediaVotes = 0;
-  
 
   mediaArray.forEach(value => {
       mediaVotes += value/mediaArray.length;
@@ -59,51 +67,71 @@ export default function CardComponent({name, description, price, previousPrice, 
 
   return (
     <Card className={classes.root}>
-      <CardHeader
-        title={name}
-      />
-      <CardMedia
-        className={classes.media}
-        image= {image}
-        title={name}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          `R$ ${previousPrice}`
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          `R$ ${price}`
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-            `${100*previousPrice/price}%`
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <Grid>
-            {[1,2,3,4,5].map(value => (<div key = {`key${value}`}>{mediaVotes >= value ? (<StarIcon/>) : mediaVotes >= (value - 0.5) ? (<StarHalfIcon/>) : (<StarBorderIcon/>)}</div> ))}
+      <Grid container direction = 'column' justify = "space-between">
+        <Grid item>
+          <CardHeader
+            title={name}
+          />
+          <CardMedia
+            className={classes.media}
+            image= {image}
+            title={name}
+          />
         </Grid>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>{description}</Typography>
+        <Grid item>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              `R$ ${previousPrice}`
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              `R$ ${price}`
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+                `${100*previousPrice/price}%`
+            </Typography>
         </CardContent>
-      </Collapse>
+
+        </Grid>
+        <Grid item>
+          <CardActions disableSpacing>
+          <Grid container>
+            <Grid item xs = {2}>
+              <IconButton aria-label="add to favorites">
+                <FavoriteIcon />
+              </IconButton>
+            </Grid>
+            <Grid item xs = {2}>
+              <IconButton aria-label="share">
+                <ShareIcon />
+              </IconButton>
+            </Grid>
+            <Grid item xs = {6} className = {classes.starContent}>
+              <Grid container direction = 'row' justify = "center" >
+                  {[1,2,3,4,5].map(value => (<Grid key = {`key${value}`}>{mediaVotes >= value ? (<StarIcon/>) : mediaVotes >= (value - 0.5) ? (<StarHalfIcon/>) : (<StarBorderIcon/>)}</Grid> ))}
+              </Grid>
+            </Grid>
+            <Grid item xs = {2}>
+              <IconButton
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph>{description}</Typography>
+          </CardContent>
+        </Collapse>
+
+        </Grid>
+      </Grid>
     </Card>
   );
 }
