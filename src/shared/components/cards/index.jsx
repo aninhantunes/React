@@ -79,15 +79,19 @@ export default function CardComponent({ name, description, price, previousPrice,
             </Grid>
             <Grid item>
               <CardContent>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  `R$ ${previousPrice}`
+                {previousPrice &&
+                  <Typography variant='h3' >
+                    R$ ${previousPrice}
+                  </Typography>
+                }
+                <Typography variant='h2'>
+                  R$ ${price}
                 </Typography>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  `R$ ${price}`
+                {previousPrice &&
+                  <Typography variant='h1' >
+                    {Math.round((100 * (previousPrice - price)) / previousPrice)}%
                 </Typography>
-                <Typography variant='body2' color='textSecondary' component='p'>
-                  `${(100 * previousPrice) / price}%`
-                </Typography>
+                }
               </CardContent>
             </Grid>
           </Grid>
@@ -114,8 +118,8 @@ export default function CardComponent({ name, description, price, previousPrice,
                       ) : mediaVotes >= value - 0.5 ? (
                         <StarHalfIcon />
                       ) : (
-                        <StarBorderIcon />
-                      )}
+                            <StarBorderIcon />
+                          )}
                     </Grid>
                   ))}
                 </Grid>
