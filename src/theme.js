@@ -1,5 +1,6 @@
 export const PRIMARY_COLOR = '#1D3557';
 export const SECONDARY_COLOR = '#a8dadc';
+export const WHITE_COLOR = '#ffffff';
 export const FONT_FAMILY_PRIMARY = 'Raleway-ExtraBold';
 export const FONT_FAMILY_SECONDARY = 'Myriad Pro Regular';
 export const FONT_FAMILY_TERTIARY = 'Raleway-Regular';
@@ -46,19 +47,19 @@ export default {
     typography: {
         fontFamily: FONT_FAMILY_SECONDARY,
         h1: {
-            fontSize: '2.25rem',
+            fontSize: '2rem',
             lineHeight: '2.65rem',
             color: PRIMARY_COLOR,
             fontFamily: FONT_FAMILY_PRIMARY,
 
         },
         h2: {
-            fontSize: '1rem',
+            fontSize: '1.5rem',
             color: PRIMARY_COLOR,
-            fontFamily: FONT_FAMILY_TERTIARY,
+            fontFamily: FONT_FAMILY_PRIMARY,
         },
         h3: {
-            fontSize: '0.875rem',
+            fontSize: '1.25rem',
             color: PRIMARY_COLOR,
             fontWidth: 'normal',
             fontFamily: FONT_FAMILY_TERTIARY,

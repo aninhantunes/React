@@ -18,6 +18,9 @@ import { Grid } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
+import Alert from '@material-ui/lab/Alert';
+import { WHITE_COLOR } from '../../../theme'
+import { ArrowDownCircle } from 'react-feather';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +42,22 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('transform', {
       duration: theme.transitions.duration.shortest,
     }),
+  },
+
+  previous: {
+    textDecoration: 'line-through',
+
+  },
+
+  textAlert: {
+    color: WHITE_COLOR,
+  },
+
+  alert: {
+    width: '120px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   starContent: {
@@ -68,6 +87,19 @@ export default function CardComponent({ name, description, price, previousPrice,
     setExpanded(!expanded);
   };
 
+  const descount = (price, previousPrice) => {
+    if (previousPrice) {
+      return (
+        <Alert variant="filled" severity="success" icon={(<ArrowDownCircle />)} >
+          <Typography variant='h2' className={classes.textAlert}>
+            {Math.round((100 * (previousPrice - price)) / previousPrice)}%
+          </Typography>
+        </Alert>
+      )
+    }
+
+  };
+
   return (
     <Card className={classes.root}>
       <Grid container direction='column' justify='space-between' className={classes.contents}>
@@ -79,19 +111,21 @@ export default function CardComponent({ name, description, price, previousPrice,
             </Grid>
             <Grid item>
               <CardContent>
-                {previousPrice &&
-                  <Typography variant='h3' >
-                    R$ ${previousPrice}
-                  </Typography>
-                }
-                <Typography variant='h2'>
-                  R$ ${price}
-                </Typography>
-                {previousPrice &&
-                  <Typography variant='h1' >
-                    {Math.round((100 * (previousPrice - price)) / previousPrice)}%
-                </Typography>
-                }
+                <Grid container direction='row' justify='space-between' alignItems='center' >
+                  <Grid item>
+                    {previousPrice &&
+                      <Typography variant='h3' className={classes.previous}>
+                        R$ ${previousPrice}
+                      </Typography>
+                    }
+                    <Typography variant='h1'>
+                      R$ ${price}
+                    </Typography>
+                  </Grid>
+                  <Grid item className={classes.alert}>
+                    {descount(price, previousPrice)}
+                  </Grid>
+                </Grid>
               </CardContent>
             </Grid>
           </Grid>
