@@ -14,7 +14,7 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Grid} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
@@ -22,6 +22,9 @@ import StarHalfIcon from '@material-ui/icons/StarHalf';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '400px',
+    minHeight: '550px',
+  },
+  contents: {
     minHeight: '550px',
   },
   media: {
@@ -51,14 +54,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CardComponent({name, description, price, previousPrice, ratings, image}) {
+export default function CardComponent({ name, description, price, previousPrice, ratings, image }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const mediaArray = ratings.map(item => item.value);
+  const mediaArray = ratings.map((item) => item.value);
   let mediaVotes = 0;
 
-  mediaArray.forEach(value => {
-      mediaVotes += value/mediaArray.length;
+  mediaArray.forEach((value) => {
+    mediaVotes += value / mediaArray.length;
   });
 
   const handleExpandClick = () => {
@@ -67,69 +70,75 @@ export default function CardComponent({name, description, price, previousPrice, 
 
   return (
     <Card className={classes.root}>
-      <Grid container direction = 'column' justify = "space-between">
+      <Grid container direction='column' justify='space-between' className={classes.contents}>
         <Grid item>
-          <CardHeader
-            title={name}
-          />
-          <CardMedia
-            className={classes.media}
-            image= {image}
-            title={name}
-          />
-        </Grid>
-        <Grid item>
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              `R$ ${previousPrice}`
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              `R$ ${price}`
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                `${100*previousPrice/price}%`
-            </Typography>
-        </CardContent>
-
+          <Grid container direction='column' justify='flex-start'>
+            <Grid item>
+              <CardHeader title={name} />
+              <CardMedia className={classes.media} image={image} title={name} />
+            </Grid>
+            <Grid item>
+              <CardContent>
+                <Typography variant='body2' color='textSecondary' component='p'>
+                  `R$ ${previousPrice}`
+                </Typography>
+                <Typography variant='body2' color='textSecondary' component='p'>
+                  `R$ ${price}`
+                </Typography>
+                <Typography variant='body2' color='textSecondary' component='p'>
+                  `${(100 * previousPrice) / price}%`
+                </Typography>
+              </CardContent>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item>
           <CardActions disableSpacing>
-          <Grid container>
-            <Grid item xs = {2}>
-              <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-            </Grid>
-            <Grid item xs = {2}>
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-            </Grid>
-            <Grid item xs = {6} className = {classes.starContent}>
-              <Grid container direction = 'row' justify = "center" >
-                  {[1,2,3,4,5].map(value => (<Grid key = {`key${value}`}>{mediaVotes >= value ? (<StarIcon/>) : mediaVotes >= (value - 0.5) ? (<StarHalfIcon/>) : (<StarBorderIcon/>)}</Grid> ))}
+            <Grid container>
+              <Grid item xs={2}>
+                <IconButton aria-label='add to favorites'>
+                  <FavoriteIcon />
+                </IconButton>
+              </Grid>
+              <Grid item xs={2}>
+                <IconButton aria-label='share'>
+                  <ShareIcon />
+                </IconButton>
+              </Grid>
+              <Grid item xs={6} className={classes.starContent}>
+                <Grid container direction='row' justify='center'>
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <Grid key={`key${value}`}>
+                      {mediaVotes >= value ? (
+                        <StarIcon />
+                      ) : mediaVotes >= value - 0.5 ? (
+                        <StarHalfIcon />
+                      ) : (
+                        <StarBorderIcon />
+                      )}
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+              <Grid item xs={2}>
+                <IconButton
+                  className={clsx(classes.expand, {
+                    [classes.expandOpen]: expanded,
+                  })}
+                  onClick={handleExpandClick}
+                  aria-expanded={expanded}
+                  aria-label='show more'
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
               </Grid>
             </Grid>
-            <Grid item xs = {2}>
-              <IconButton
-                className={clsx(classes.expand, {
-                  [classes.expandOpen]: expanded,
-                })}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{description}</Typography>
-          </CardContent>
-        </Collapse>
-
+          </CardActions>
+          <Collapse in={expanded} timeout='auto' unmountOnExit>
+            <CardContent>
+              <Typography paragraph>{description}</Typography>
+            </CardContent>
+          </Collapse>
         </Grid>
       </Grid>
     </Card>
