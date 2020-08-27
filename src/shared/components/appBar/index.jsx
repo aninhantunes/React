@@ -14,12 +14,12 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { loginOperation } from '../../../routers/public/login/redux';
 import { Redirect } from 'react-router-dom';
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import ModalPersonalData from '../modalPersonalData';
 import Avatar from '@material-ui/core/Avatar';
-import {deepPurple } from '@material-ui/core/colors';
-import {USER_COLORs, USER_COLORS} from '../../../theme';
+import { deepPurple } from '@material-ui/core/colors';
+import { USER_COLORs, USER_COLORS } from '../../../theme';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,20 +85,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  purple:({userColor}) => ({
+  purple: ({ userColor }) => ({
     backgroundColor: userColor,
   }),
 
 }));
 
-export function AppBarComponent({userLogOff, dataLogin}) {
+export function AppBarComponent({ userLogOff, dataLogin }) {
   const [toRedirect, setToRedirect] = useState(false);
-  const userColorId = (dataLogin.id - 1)%USER_COLORS.length;
-  const classes = useStyles({userColor : USER_COLORS[userColorId]});
+  const userColorId = (dataLogin.id - 1) % USER_COLORS.length;
+  const classes = useStyles({ userColor: USER_COLORS[userColorId] });
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -120,7 +120,7 @@ export function AppBarComponent({userLogOff, dataLogin}) {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const logOff = async() => {
+  const logOff = async () => {
     await userLogOff();
     setToRedirect(true);
   };
@@ -132,12 +132,15 @@ export function AppBarComponent({userLogOff, dataLogin}) {
 
   let initialsName = '';
 
-  if(dataLogin.name){
+  if (dataLogin.name) {
     const initialsNameArray = dataLogin.name.split(' ');
-    console.log("trace name", initialsNameArray);
-    initialsName = [initialsNameArray[0][0], initialsNameArray[1][0]].join('').toUpperCase();
+    if (initialsNameArray.length === 1) {
+      initialsName = initialsNameArray[0][0].toUpperCase();
+    } else {
+      initialsName = [initialsNameArray[0][0], initialsNameArray[1][0]].join('').toUpperCase();
+    }
   }
- 
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
@@ -190,11 +193,11 @@ export function AppBarComponent({userLogOff, dataLogin}) {
           aria-haspopup="true"
           color="inherit"
         >
-         {dataLogin.userPhoto ?  
-          (<Avatar alt="Remy Sharp" src={dataLogin.userPhoto}/>)
-          :
-         (<Avatar className={classes.purple}>{initialsName}</Avatar>)
-         }
+          {dataLogin.userPhoto ?
+            (<Avatar alt="Remy Sharp" src={dataLogin.userPhoto} />)
+            :
+            (<Avatar className={classes.purple}>{initialsName}</Avatar>)
+          }
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -202,8 +205,8 @@ export function AppBarComponent({userLogOff, dataLogin}) {
   );
 
 
-  if(toRedirect){
-    return(
+  if (toRedirect) {
+    return (
       <Redirect to='/login' />
     )
   }
@@ -221,7 +224,7 @@ export function AppBarComponent({userLogOff, dataLogin}) {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Material-UI
+            ECommerce
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -244,7 +247,7 @@ export function AppBarComponent({userLogOff, dataLogin}) {
               </Badge>
             </IconButton>
             <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+              <Badge badgeContent={dataLogin.notifications && dataLogin.notifications.length} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -256,10 +259,10 @@ export function AppBarComponent({userLogOff, dataLogin}) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              {dataLogin.userPhoto ?  
-              (<Avatar alt="Remy Sharp" src={dataLogin.userPhoto} />)
-              :
-              (<Avatar className={classes.purple}>{initialsName}</Avatar>)
+              {dataLogin.userPhoto ?
+                (<Avatar alt="Remy Sharp" src={dataLogin.userPhoto} />)
+                :
+                (<Avatar className={classes.purple}>{initialsName}</Avatar>)
               }
             </IconButton>
           </div>
@@ -278,7 +281,7 @@ export function AppBarComponent({userLogOff, dataLogin}) {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <ModalPersonalData modalIsOpen = {modalIsOpen} closeModal = {() => {setModalIsOpen(false)}} initialData = {dataLogin}/>
+      <ModalPersonalData modalIsOpen={modalIsOpen} closeModal={() => { setModalIsOpen(false) }} initialData={dataLogin} />
     </div>
   );
 }
@@ -296,6 +299,7 @@ const mapStateToProps = (state) => {
       email: state.login.email,
       userPhoto: state.login.userPhoto,
       id: state.login.id,
+      notifications: state.login.notifications,
     },
   };
 };

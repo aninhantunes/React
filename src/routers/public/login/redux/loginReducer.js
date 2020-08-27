@@ -1,19 +1,20 @@
-import {SAVE_DATA_LOGIN, USER_LOG_OFF} from './loginActions';
+import { SAVE_DATA_LOGIN, USER_LOG_OFF } from './loginActions';
 
 const INITIAL_STATE = {
-    email : '',
+    email: '',
     birthDate: '',
     fullName: '',
     userPhoto: '',
     id: 0,
     authentication: false,
+    notifications: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
-    switch(action.type){
+    switch (action.type) {
         case SAVE_DATA_LOGIN:
             const data = action.payload;
-            return{
+            return {
                 ...state,
                 email: data.email,
                 birthDate: data.birthDate,
@@ -21,10 +22,11 @@ export default (state = INITIAL_STATE, action) => {
                 userPhoto: data.userPhoto,
                 id: data.id,
                 authentication: !!data.email,
-                
+                notifications: data.notifications,
+
             };
         case USER_LOG_OFF:
-            return{
+            return {
                 ...INITIAL_STATE,
             };
 
